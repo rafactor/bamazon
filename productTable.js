@@ -24,6 +24,11 @@ config = {
             alignment: 'right',
             minWidth: 10,
             width: 10
+        },
+        4: {
+            alignment: 'center',
+            minWidth: 5,
+            width: 5
         }
     }
 };

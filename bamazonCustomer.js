@@ -1,32 +1,41 @@
 // var inquirer = require('inquirer');
 var connection = require('./connection');
+var promptToSale = require('./promptStore')
 
-
-var displayProducts = require('./displayProducts');
-// var queryResult;
-
-// var stock;
-// var quantity;
-// var item_id;
-
-connection.connect(function (err) {
-    if (err) {
-        throw err
-    };
-    console.log('Server connected')
-    displayProducts()
-    
-    connection.end()
+var delay = (seconds) => new Promise((resolves) => {
+    setTimeout(resolves, seconds*1000);
 })
 
+var displayProducts = require('./displayProducts');
 
-// UPDATE bamazon.products SET stock_quantity =8  WHERE item_id = 1
-// processOrder = () => {
-//     connection.query('UPDATE products SET stock_quantity = ? WHERE item_id = ?', [stock - quantity, item_id], function (err, response) {
-//         if (err) throw err;
+const runCustomer = async () => {
+    displayProducts();
+    await delay(2);
+    promptToSale();
+    await delay(2)
+    
 
-//         console.log('*************      Updated       ************* \n')
+    return Promise.resolve();
+}
 
-        
-//     });
-// }
+runCustomer().then(()=>{
+    displayProducts()
+    connection.end()});
+    
+
+    // console.log('here')
+    // .then(console.log('here'))
+
+
+// connection.connect(function (err) {
+//     if (err) {
+//         throw err
+//     };
+//     console.log('Server connected')
+//     displayProducts()
+    
+//     // connection.end()
+//     console.log('end connection')
+// })
+
+

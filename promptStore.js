@@ -1,6 +1,8 @@
 var inquirer = require('inquirer');
+var numeral = require('numeral');
+var processOrder = require('./query');
 
-var prompt = function () {
+var promptToSale = function () {
 
   inquirer.prompt([{
       type: 'input',
@@ -22,17 +24,18 @@ var prompt = function () {
      
   }]).then(function (answers) {
       // check the quantity available for the selected product
-      stock = queryResult[answers.id].stock_quantity;
+      item_id = answers.id - 1 // adjust the selected item reference
+      stock = queryResult[item_id].stock_quantity;
       quantity = answers.quantity;
-      item_id = answers.id;
-      totalcost = quantity * queryResult[answers.id].price
+      totalcost = numeral(quantity * queryResult[item_id].price).format('$0,0.00')
       // console.log(products[answers.id])
 
       if (stock >= quantity) {
-          // processOrder()
-          console.log(`\n ${item_id} ${queryResult[answers.id].product_name} added into the shopping cart. Total value is ${totalcost} \n`)
+          processOrder()
+          console.log(`\n ${quantity} ${queryResult[item_id].product_name} added into your shopping cart.\n\n The total value of your purchase is ${totalcost} \n`)
       } else {
-          console.log(`\n Insufficient quantity in stock. \n Order canceled. \n`)
+          var verb = (stock > 1)? 'are': 'is';
+          console.log(`\n Insufficient quantity in stock. There ${verb} ${stock} units available in stock. \n\n Your order is canceled. \n`)
       }
     
   }).catch((err)=>{
@@ -40,4 +43,4 @@ var prompt = function () {
   });
 }
 
-module.exports = prompt
+module.exports = promptToSale

@@ -1,29 +1,28 @@
 // var mysql = require("mysql");
-// var inquirer = require('inquirer');
+var numeral = require('numeral');
 var connection = require('./connection');
-var prompt= require('./promptStore')
+
 
 var productTable = require('./productTable');
-var products = [['ID', 'PRODUCT','DEPARTMENT','PRICE']];
+var products = [['ID', 'PRODUCT','   DEPARTMENT','PRICE   ','STOCK']];
 
 
-var displayProducts = function displayProducts() {
+var displayProducts = function () {
     connection.query("SELECT * FROM products", function (err, response) {
         if (err) throw err;
 
-        console.log('**************************      BAMAZON       ************************** \n')
+        console.log('\n\n **************************      WELCOME TO BAMAZON SALES SYSTEM      ************************** \n\n')
         console.log('List of Products: ')
 
         queryResult = response
         response.forEach((item) => {
             let row = [];
-            row.push(item.item_id, item.product_name, item.department_name, item.price)
+            let price = numeral(item.price).format('$0,0.00')
+            row.push(item.item_id, item.product_name, item.department_name, price, item.stock_quantity)
             products.push(row)
         });
-            
-        productTable(products)
-        // console.log('questions')
-        prompt()
+            productTable(products)
+            return true
     });
 }
 
