@@ -13,3 +13,5 @@ Then, the app inquires the user to enter the product ID and the desired quantity
 If the user enters a quantity higher than the available stock, the order is cancelled. Otherwise, the system updates the database by subtracting the number requested and finalize the process by returning the total cost of the products.
 
 ## Screenshots
+
+![Screenshots](./Bamazon.png)
