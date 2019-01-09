@@ -7,6 +7,8 @@ var delay = (seconds) => new Promise((resolves) => {
 
 var displayProducts = require('./displayProducts');
 
+console.log('\n\n **************************      WELCOME TO BAMAZON SALES SYSTEM      ************************** \n\n')
+
 const runCustomer = async () => {
     displayProducts();
     await delay(2);

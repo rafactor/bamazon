@@ -4,14 +4,15 @@ var connection = require('./connection');
 
 
 var productTable = require('./productTable');
-var products = [['ID', 'PRODUCT','   DEPARTMENT','PRICE   ','STOCK']];
+
 
 
 var displayProducts = function () {
+    // var products = [];
+var products = [['ID', 'PRODUCT','   DEPARTMENT','PRICE   ','STOCK']];
     connection.query("SELECT * FROM products", function (err, response) {
         if (err) throw err;
 
-        console.log('\n\n **************************      WELCOME TO BAMAZON SALES SYSTEM      ************************** \n\n')
         console.log('List of Products: ')
 
         queryResult = response
